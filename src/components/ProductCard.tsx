@@ -1,23 +1,21 @@
 import React from "react";
 
 interface IPriceCardProps {
-  item: {
     id: number;
-    slug: string;
-    nameBn: string;
-    category: string;
-    categoryNameBn: string;
-    categoryIcon: string;
-    unit: string;
-    image: string;
-    today: number;
-    yesterday: number;
-    lastWeek: number;
-    lastMonth: number;
-    change: {
-      dir: "up" | "down";
-      pct: number;
-    };
+  slug: string;
+  nameBn: string;
+  category: string;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: {
+    dir: string;
+    pct: number;
   };
 }
 
@@ -30,7 +28,7 @@ interface IPriceCardProps {
 
 
 
-const ProductCard = ({ item }: IPriceCardProps) => {
+const ProductCard = ({ item }: {item:IPriceCardProps}) => {
   const isUp = item.change.dir === "up";
 
   return (
@@ -76,19 +74,16 @@ const ProductCard = ({ item }: IPriceCardProps) => {
 
           {/* Price Change Badge */}
           <div
-            className={`badge h-auto shrink-0 gap-1 rounded-full border-0 px-3 py-2 text-[16px] font-semibold ${
+            className={`badge h-auto shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm  ${
               isUp
-                ? "bg-[#f0f5f0] text-[#dc3545]"
-                : "bg-[#f0f5f0] text-[#16834a]"
+                ? "bg-[#f0f5f0] text-red-500"
+                : "bg-[#f0f5f0] text-green-500"
             }`}
           >
             <span>{isUp ? "▲" : "▼"}</span>
 
             <span>
-              {item.change.pct.toLocaleString("bn-BD", {
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 2,
-              })}
+              {Math.abs(item.change.pct).toLocaleString("bn-BD")}
               %
             </span>
           </div>

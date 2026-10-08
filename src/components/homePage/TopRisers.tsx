@@ -1,16 +1,7 @@
 import React from "react";
 import ProductCard from "../ProductCard";
 
-interface ITopRisers {
-  // id: number;
-  // image: string;
-  // nameBn: string;
-  // unit: string;
-  // today: string;
-  // change: {
-  //   dir: string;
-  //   pct: number;
-  // };
+ interface ITopRisers {
   id: number;
   slug: string;
   nameBn: string;
@@ -24,14 +15,14 @@ interface ITopRisers {
   lastWeek: number;
   lastMonth: number;
   change: {
-    dir: "up" | "down";
+    dir: string;
     pct: number;
   };
 }
 
-const TopRisers = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
-  const data: ITopRisers[] = await res.json();
+const TopRisers = async ({data}:{data:ITopRisers[]}) => {
+  // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+  // const data: ITopRisers[] = await res.json();
   const topRisers = data
     .filter((p) => p.change.dir === "up")
     .sort((a, b) => Number(b.change.pct) - Number(a.change.pct))
