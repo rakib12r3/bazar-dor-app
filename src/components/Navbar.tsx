@@ -2,6 +2,7 @@ import Image from "next/image";
 import Logo from "@/assets/logo-icon.png";
 import React from "react";
 import NavLinks from "./NavLinks";
+import Marquee from "./Marquee";
 
 const Navbar = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -42,6 +43,9 @@ const Navbar = () => {
         </div>
       </div>
       <NavLinks />
+      <div className="border border-gray-100">
+      <Marquee />
+      </div>
     </>
   );
 };

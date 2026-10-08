@@ -1,32 +1,35 @@
-import React from 'react';
+import React from "react";
 
-interface INavs{
-   id: string,
-    slug: string,
-    nameBn: string,
-    icon: string
+interface INavs {
+  id: string;
+  slug: string;
+  nameBn: string;
+  icon: string;
 }
 
-const NavLinks =async () => {
- 
-    const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories')
-    const data:INavs[] = await res.json()
-    console.log(data);
-    
-
+const NavLinks = async () => {
+  const res = await fetch(
+    "https://api.abcz.workers.dev/api/bazardor/categories",
+  );
+  const data: INavs[] = await res.json();
+  console.log(data);
 
   return (
-    <div className='border-y border-gray-100'>
-
-    <div className='flex gap-5 w-full max-w-6xl mx-auto px-5 py-2'>
-      {
-        data.map(item => <div className='hover:bg-gray-200 px-3 py-1 rounded-[10px]' key={item.id}>
-         
-      <p><span>{item.icon}</span>{item.nameBn}</p>
-        </div>)
-      }
-    </div>
+    <div className="border-y border-gray-100">
+      <div className="flex gap-5 w-full max-w-6xl mx-auto px-5 py-2">
+        {data.map((item) => (
+          <div
+            className="hover:bg-gray-200 px-3 py-1 rounded-[10px]"
+            key={item.id}
+          >
+            <p>
+              <span>{item.icon}</span>
+              {item.nameBn}
+            </p>
+          </div>
+        ))}
       </div>
+    </div>
   );
 };
 
