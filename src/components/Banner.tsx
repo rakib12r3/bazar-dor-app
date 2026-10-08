@@ -7,7 +7,9 @@ const Banner = () => {
     dateStyle:"full"
   })
   return (
-    <div className='w-full max-w-6xl mx-auto px-5 bg-white rounded-2xl my-6'>
+    <div className='w-full max-w-6xl mx-auto px-5'>
+
+    <div className='px-5 bg-white rounded-2xl my-6'>
 
       <div className='flex justify-between'>
       <div className='max-w-[600px]'>
@@ -20,6 +22,7 @@ const Banner = () => {
 
       <Image src={BannerImage} alt='BannerImg'/>
       </div>
+    </div>
     </div>
   );
 };

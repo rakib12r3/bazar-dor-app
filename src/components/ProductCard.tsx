@@ -1,0 +1,101 @@
+import React from "react";
+
+interface IPriceCardProps {
+  item: {
+    id: number;
+    slug: string;
+    nameBn: string;
+    category: string;
+    categoryNameBn: string;
+    categoryIcon: string;
+    unit: string;
+    image: string;
+    today: number;
+    yesterday: number;
+    lastWeek: number;
+    lastMonth: number;
+    change: {
+      dir: "up" | "down";
+      pct: number;
+    };
+  };
+}
+
+  const unitBn: Record<string, string> = {
+    kg: "কেজি",
+    litre: "লিটার",
+    piece: "পিস",
+    dozen: "ডজন",
+  };
+
+
+
+const ProductCard = ({ item }: IPriceCardProps) => {
+  const isUp = item.change.dir === "up";
+
+  return (
+    <div className="card w-full rounded-[24px] border border-[#dfe6df] bg-[#fbfdfb] shadow-none transition-all duration-200 hover:border-[#cbd8cc] bg-white">
+      <div className="card-body gap-0 p-6">
+        {/* Product Information */}
+        <div className="flex items-center gap-5">
+          {/* Product Icon */}
+          <div className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
+            {item.image || item.categoryIcon}
+          </div>
+
+          {/* Product Name */}
+          <div className="min-w-0 flex-1 leading-tight">
+            <h2 className="text-[16px]  font-semibold text-[#111c18]">
+              {item.nameBn}
+            </h2>
+
+            <p className="mt-1 text-[15px] text-[#66756d]">
+              প্রতি {unitBn[item.unit]}
+            </p>
+          </div>
+        </div>
+
+        {/* Today's Price */}
+        <div className="mt-5 flex items-end justify-between gap-3">
+          <div>
+            <p className="text-sm text-[#718078]">
+              আজকের দাম
+            </p>
+
+            <div className=" flex items-baseline gap-1">
+
+              <span className="text-[23px] leading-none font-bold text-[#14221b]">
+                {item.today.toLocaleString("bn-BD")}
+              </span>
+
+              <span className="text-[17px]">
+                টাকা
+              </span>
+            </div>
+          </div>
+
+          {/* Price Change Badge */}
+          <div
+            className={`badge h-auto shrink-0 gap-1 rounded-full border-0 px-3 py-2 text-[16px] font-semibold ${
+              isUp
+                ? "bg-[#f0f5f0] text-[#dc3545]"
+                : "bg-[#f0f5f0] text-[#16834a]"
+            }`}
+          >
+            <span>{isUp ? "▲" : "▼"}</span>
+
+            <span>
+              {item.change.pct.toLocaleString("bn-BD", {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 2,
+              })}
+              %
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
