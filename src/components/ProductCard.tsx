@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IPriceCardProps {
-    id: number;
+  id: number;
   slug: string;
   nameBn: string;
   category: string;
@@ -19,17 +19,18 @@ interface IPriceCardProps {
   };
 }
 
-  const unitBn: Record<string, string> = {
-    kg: "কেজি",
-    litre: "লিটার",
-    piece: "পিস",
-    dozen: "ডজন",
-  };
+const unitBn: Record<string, string> = {
+  kg: "কেজি",
+  litre: "লিটার",
+  piece: "পিস",
+  dozen: "ডজন",
+};
 
-
-
-const ProductCard = ({ item }: {item:IPriceCardProps}) => {
-  const isUp = item.change.dir === "up";
+const ProductCard = ({ item }: { item: IPriceCardProps }) => {
+  const isUp =
+    item.change.dir === "up" ||
+    item.change.dir === "down" ||
+    item.change.dir === "flat";
 
   return (
     <div className="card w-full rounded-[24px] border border-[#dfe6df] bg-[#fbfdfb] shadow-none transition-all duration-200 hover:border-[#cbd8cc] bg-white">
@@ -56,36 +57,36 @@ const ProductCard = ({ item }: {item:IPriceCardProps}) => {
         {/* Today's Price */}
         <div className="mt-5 flex items-end justify-between gap-3">
           <div>
-            <p className="text-sm text-[#718078]">
-              আজকের দাম
-            </p>
+            <p className="text-sm text-[#718078]">আজকের দাম</p>
 
             <div className=" flex items-baseline gap-1">
-
               <span className="text-[23px] leading-none font-bold text-[#14221b]">
                 {item.today.toLocaleString("bn-BD")}
               </span>
 
-              <span className="text-[17px]">
-                টাকা
-              </span>
+              <span className="text-[17px]">টাকা</span>
             </div>
           </div>
 
           {/* Price Change Badge */}
           <div
             className={`badge h-auto shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm  ${
-              isUp
-                ? "bg-[#f0f5f0] text-red-500"
-                : "bg-[#f0f5f0] text-green-500"
+              item.change.dir === "up"
+                ? "bg-[#f0f5f0]  text-red-500"
+                : item.change.dir === "down"
+                  ? "bg-[#f0f5f0] text-green-500"
+                  : "bg-[#f0f5f0]"
             }`}
           >
-            <span>{isUp ? "▲" : "▼"}</span>
-
             <span>
-              {Math.abs(item.change.pct).toLocaleString("bn-BD")}
-              %
+              {item.change.dir === "up"
+                ? "▲"
+                : item.change.dir === "down"
+                  ? "▼"
+                  : "—"}
             </span>
+
+            <span>{Math.abs(item.change.pct).toLocaleString("bn-BD")}%</span>
           </div>
         </div>
       </div>

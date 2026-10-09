@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface INavs {
@@ -18,7 +19,7 @@ const NavLinks = async () => {
     <div className="border-y border-gray-100">
       <div className="flex gap-5 w-full max-w-6xl mx-auto px-5 py-2">
         {data.map((item) => (
-          <div
+          <Link href={`/category/${item.slug}`}
             className="hover:bg-gray-200 px-3 py-1 rounded-[10px]"
             key={item.id}
           >
@@ -26,7 +27,7 @@ const NavLinks = async () => {
               <span>{item.icon}</span>
               {item.nameBn}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
