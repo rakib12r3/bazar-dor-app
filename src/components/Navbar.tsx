@@ -3,6 +3,7 @@ import Logo from "@/assets/logo-icon.png";
 import React from "react";
 import NavLinks from "./NavLinks";
 import Marquee from "./Marquee";
+import Link from "next/link";
 
 const Navbar = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -15,7 +16,7 @@ const Navbar = () => {
       <div className="w-full max-w-6xl mx-auto px-5 py-5">
         <div className="flex justify-between items-center ">
           {/* Left div */}
-          <div className="flex items-center gap-3">
+          <Link href={"/"} className="flex items-center gap-3">
             <div className="bg-green-700 p-3 rounded-2xl">
               <Image
                 className="brightness-0 invert opacity-90"
@@ -29,7 +30,7 @@ const Navbar = () => {
               <p className=" font-extrabold text-lg">বাজার দর</p>
               <span className="text-[#1D271F] text-sm">{date}</span>
             </div>
-          </div>
+          </Link>
 
           {/* Right div */}
           <div className="flex items-center gap-2">

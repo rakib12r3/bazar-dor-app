@@ -1,5 +1,5 @@
+import CategoryProducts from "@/components/CategoryProduct";
 import ProductCard from "@/components/ProductCard";
-import React from "react";
 
 interface ICategoryPage{
    id: number;
@@ -38,6 +38,12 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
   const data:ICategoryPage[] = await res.json();
   console.log(data, "from category page");
 
+
+
+
+
+
+
   return (
     <div className="w-full max-w-6xl mx-auto px-5">
       CategoryPage
@@ -55,13 +61,8 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 mb-[50px]">
-        {
-          data.map(product=> (
-            <ProductCard key={product.id} item={product}/>
-          ))
-        }
-      </div>
+
+      <CategoryProducts products={data}/>
     </div>
   );
 };
