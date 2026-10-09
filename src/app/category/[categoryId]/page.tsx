@@ -27,13 +27,13 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
   console.log(categoryId);
 
   const respons = await fetch(
-    `https://api.abcz.workers.dev/api/bazardor/categories/${categoryId}`,
+    `https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`,
   );
   const categoryData = await respons.json();
   console.log(categoryData, "from single category");
 
   const res = await fetch(
-    `https://api.abcz.workers.dev/api/bazardor/products?category=${categoryId}`,
+    `https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`,
   );
   const data:ICategoryPage[] = await res.json();
   console.log(data, "from category page");

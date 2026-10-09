@@ -10,10 +10,10 @@ interface INavs {
 
 const NavLinks = async () => {
   const res = await fetch(
-    "https://api.abcz.workers.dev/api/bazardor/categories",
+    "https://api.api-store.workers.dev/api/bazardor/categories",
   );
   const data: INavs[] = await res.json();
-  console.log(data);
+  console.log(data,'from Nav Links');
 
   return (
     <div className="border-y border-gray-100">

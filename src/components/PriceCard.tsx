@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface IMarket {
@@ -31,16 +30,20 @@ interface PriceDetailsCardProps {
   data: IPriceData;
 }
 
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat("bn-BD", {
-    maximumFractionDigits: 2,
-  }).format(price);
+// const formatPrice = (price: number) =>
+//   new Intl.NumberFormat("bn-BD", {
+//     maximumFractionDigits: 2,
+//   }).format(price);
+function formatPrice(price: number) {
+  const formattedPrice = price.toLocaleString("bn-BD");
+  return formattedPrice;
+}
 
 
 
   
 const PriceDetailsCard = ({ data }: PriceDetailsCardProps) => {
-  const markets = data.markets;
+  const markets = [...data.markets].sort((a, b) => a.max - b.max);
 
   const minPrice = Math.min(...markets.map((item) => item.min));
   const maxPrice = Math.max(...markets.map((item) => item.max));
@@ -50,8 +53,16 @@ const PriceDetailsCard = ({ data }: PriceDetailsCardProps) => {
     markets.reduce((total, item) => total + (item.min + item.max) / 2, 0) /
     markets.length;
 
+  const unitBn: Record<string, string> = {
+  kg: "কেজি",
+  litre: "লিটার",
+  piece: "পিস",
+  dozen: "ডজন",
+};
+
+
   return (
-    <div className="w-full rounded-2xl border border-[#dfe8df] bg-[#f8fbf8] p-4 sm:p-5">
+    <div className="w-full rounded-2xl border border-[#dfe8df] bg-white mt-5 p-4 sm:p-5">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {/* Lowest Price */}
@@ -93,12 +104,12 @@ const PriceDetailsCard = ({ data }: PriceDetailsCardProps) => {
           </p>
 
           <h3 className="mt-1 text-2xl font-bold text-green-600">
-            {formatPrice(averagePrice)}{" "}
+            {formatPrice(Math.round(averagePrice))}
             <span className="text-sm font-medium">টাকা</span>
           </h3>
 
           <p className="mt-1 text-xs text-gray-500">
-            প্রতি {data.unit === "kg" ? "কেজি" : data.unit} হিসেবে
+            প্রতি {unitBn[data.unit]} হিসেবে
           </p>
         </div>
       </div>
@@ -109,17 +120,14 @@ const PriceDetailsCard = ({ data }: PriceDetailsCardProps) => {
           বাজারভিত্তিক আজকের দাম
         </h2>
 
-        <span className="badge badge-outline border-[#dfe8df] text-gray-600">
-          {formatPrice(data.today)} টাকা /{" "}
-          {data.unit === "kg" ? "কেজি" : data.unit}
-        </span>
+     
       </div>
 
       {/* Responsive Table */}
       <div className="w-full overflow-x-auto rounded-2xl border border-[#dfe8df]">
         <table className="table w-full min-w-[650px] border-collapse">
           <thead>
-            <tr className="border-b border-[#dfe8df] bg-transparent text-sm text-gray-500">
+            <tr className="border-b border-[#dfe8df] text-sm text-gray-500">
               <th className="px-4 py-4 font-semibold">বাজার</th>
               <th className="px-4 py-4 font-semibold">বিভাগ</th>
               <th className="px-4 py-4 text-right font-semibold">
@@ -141,7 +149,7 @@ const PriceDetailsCard = ({ data }: PriceDetailsCardProps) => {
               return (
                 <tr
                   key={`${item.market}-${index}`}
-                  className={`border-b border-[#dfe5df] text-sm text-[#273129] transition-colors hover:bg-green-50 ${
+                  className={`border-b border-[#dfe5df] text-sm text-[#273129] transition-colors ${
                     index % 2 === 1 ? "bg-[#eff4ef]" : "bg-transparent"
                   }`}
                 >

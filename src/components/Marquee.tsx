@@ -14,7 +14,7 @@ interface IMarquee {
 }
 
 const Marquee = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
   const data: IMarquee[] = await res.json();
   console.log(data, "from marquee");
 

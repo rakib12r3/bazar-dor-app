@@ -1,5 +1,5 @@
 import PriceDetailsCard from "@/components/PriceCard";
-import PriceCard from "@/components/PriceCard";
+import Link from "next/link";
 import React from "react";
 
 interface IDetailsPage {
@@ -16,7 +16,7 @@ interface IDetailsPage {
   lastWeek: number;
   lastMonth: number;
   change: {
-    dir: string;
+    dir: "up" | "down";
     pct: number;
   };
   markets: {
@@ -38,7 +38,7 @@ const page = async ({ params }: { params: { id: number } }) => {
   };
 
   const res = await fetch(
-    `https://api.abcz.workers.dev/api/bazardor/products/${id}`,
+    `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
   );
   const data: IDetailsPage = await res.json();
   // const marketsDetails = data.markets;
@@ -46,19 +46,24 @@ const page = async ({ params }: { params: { id: number } }) => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-5">
+      <div className="flex gap-2 my-5">
+        <Link href={"/"} className="hover:underline">হোম</Link><span>›</span>
+        <Link href={`/category/${data.category}`} className="hover:underline">{data.categoryNameBn}</Link><span>›</span>
+        <p>{data.nameBn}</p>
+      </div>
       <div className="flex justify-between items-center bg-white px-5 py-3 rounded-3xl">
         <div className="flex items-center gap-5">
           {/* Product Icon */}
-          <div className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
+          <div className="flex h-[70px] w-[70px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
             {data.image || data.categoryIcon}
           </div>
 
           {/* Product Name */}
           <div className="min-w-0 flex-1 leading-tight">
-            <h2 className="text-[16px]  font-semibold text-[#111c18]">
+            <h2 className="text-3xl  font-bold text-[#111c18]">
               {data.nameBn}
             </h2>
-            <p>{`প্রতি ${unitBn[data.unit]} · ${data.categoryNameBn}`}</p>
+            <p className="text-gray-500 text-sm">{`প্রতি ${unitBn[data.unit]} · ${data.categoryNameBn}`}</p>
 
             <p>
               {`গতকালের তুলনায় আজ দাম · ${
@@ -76,12 +81,14 @@ const page = async ({ params }: { params: { id: number } }) => {
           </div>
         </div>
         <div className="bg-[#FAFCFA] p-5 rounded-3xl">
-          <p>আজকের দাম</p>
-          <span>{data.today.toLocaleString("bn-BD")}</span>
-          <p>{`টাকা / ${unitBn[data.unit]}`}</p>
+          <p className="text-sm text-gray-500">আজকের দাম</p>
+          <p className="text-center text-3xl font-bold">
+            {data.today.toLocaleString("bn-BD")}
+          </p>
+          <p className="text-sm text-gray-500 text-center">{`টাকা / ${unitBn[data.unit]}`}</p>
 
           <div
-            className={`badge h-auto shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm  ${
+            className={`badge  shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm  ${
               data.change.dir === "up"
                 ? "bg-[#f0f5f0]  text-red-500"
                 : data.change.dir === "down"
