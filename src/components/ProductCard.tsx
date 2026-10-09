@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface IPriceCardProps {
@@ -33,7 +34,7 @@ const ProductCard = ({ item }: { item: IPriceCardProps }) => {
     item.change.dir === "flat";
 
   return (
-    <div className="card w-full rounded-[24px] border border-[#dfe6df] bg-[#fbfdfb] shadow-none transition-all duration-200 hover:border-[#cbd8cc] bg-white">
+    <Link href={`/product/${item.id}`} className="card w-full rounded-[24px] border border-[#dfe6df] bg-[#fbfdfb] shadow-none transition-all duration-200 hover:border-[#cbd8cc] bg-white">
       <div className="card-body gap-0 p-6">
         {/* Product Information */}
         <div className="flex items-center gap-5">
@@ -90,7 +91,7 @@ const ProductCard = ({ item }: { item: IPriceCardProps }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
