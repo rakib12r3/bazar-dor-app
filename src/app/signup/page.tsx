@@ -28,6 +28,20 @@ const SignUpPage = () => {
     }
   }
 
+   const handleGoogleSignIn = async () => {
+      const data = await authClient.signIn.social({
+        provider: "google",
+      });
+      console.log(data, 'from handleGoogleSignIn');
+      
+    };
+  
+    const handleGithubSignIn = async () => {
+      const data = await authClient.signIn.social({
+        provider: "github",
+      });
+    }
+
 
 
   return (
@@ -115,7 +129,8 @@ const SignUpPage = () => {
 
             {/* Social Login Buttons */}
             <div className="grid grid-cols-2 gap-2">
-              <button
+              <button 
+              onClick={handleGoogleSignIn}
                 type="button"
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
@@ -123,7 +138,8 @@ const SignUpPage = () => {
                 Google দিয়ে চালিয়ে যান
               </button>
 
-              <button
+              <button 
+              onClick={handleGithubSignIn}
                 type="button"
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >

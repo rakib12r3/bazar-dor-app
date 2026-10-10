@@ -37,6 +37,12 @@ const SignInPage = () => {
     
   };
 
+  const handleGithubSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "github",
+    });
+  }
+
   return (
     <main className="min-h-screen bg-[#f0f5f0] px-4 py-10 text-[#202a22]">
       <div className="mx-auto w-full max-w-[392px]">
@@ -116,7 +122,7 @@ const SignInPage = () => {
               </button>
 
               <button
-                type="button"
+              onClick={handleGithubSignIn}
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
                 {/* <Github size={15} /> */}
