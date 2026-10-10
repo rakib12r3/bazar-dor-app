@@ -46,7 +46,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-5">
-      CategoryPage
+     
       <div className="flex  my-7 bg-white items-center p-5 gap-3 rounded-2xl">
         <div className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
           {categoryData.image || categoryData.icon}

@@ -34,8 +34,10 @@ const ProductCard = ({ item }: { item: IPriceCardProps }) => {
     item.change.dir === "flat";
 
   return (
-    <Link href={`/product/${item.id}`} className="card w-full rounded-[24px] border border-[#dfe6df] bg-[#fbfdfb] shadow-none transition-all duration-200 hover:border-[#cbd8cc] bg-white">
-      <div className="card-body gap-0 p-6">
+    <Link href={`/product/${item.id}`} 
+    className="card w-full rounded-[24px] border border-transparent bg-white shadow-none hover:border-gray-500"
+    >
+      <div className="card-body gap-0 p-6 ">
         {/* Product Information */}
         <div className="flex items-center gap-5">
           {/* Product Icon */}
@@ -76,7 +78,7 @@ const ProductCard = ({ item }: { item: IPriceCardProps }) => {
                 ? "bg-[#f0f5f0]  text-red-500"
                 : item.change.dir === "down"
                   ? "bg-[#f0f5f0] text-green-500"
-                  : "bg-[#f0f5f0]"
+                  : "bg-[#f0f5f0] text-gray-500"
             }`}
           >
             <span>

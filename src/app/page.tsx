@@ -5,15 +5,7 @@ import TopRisers from "@/components/homePage/TopRisers";
 import Image from "next/image";
 
 interface ITopRisers {
-  // id: number;
-  // image: string;
-  // nameBn: string;
-  // unit: string;
-  // today: string;
-  // change: {
-  //   dir: string;
-  //   pct: number;
-  // };
+
   id: number;
   slug: string;
   nameBn: string;
