@@ -2,40 +2,47 @@
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 // import { Github, ArrowLeft } from "lucide-react";
 
 const SignInPage = () => {
+  const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const user = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
 
-    const onSubmit =async (e:React.SubmitEvent<HTMLElement>) => {
-      e.preventDefault()
-      const formData = new FormData(e.target)
-      const user = Object.fromEntries(formData.entries()) as {email:string, password:string}
+    const { data, error } = await authClient.signIn.email({
+      ...user,
+      callbackURL: "/",
+    });
 
-      const {data, error} = await authClient.signIn.email({
-        ...user,
-        callbackURL: "/"
-      })
-
-      if(data){
-        console.log(data);
-        
-      }
-        if(error){
-          console.log(error);
-          
-        }
-
+    if (data) {
+      toast.success("Sign In Successful");
+      console.log(data);
     }
+    if (error) {
+      toast.error("ফর্মের তথ্য ঠিক করে আবার চেষ্টা করুন।");
+      console.log(error);
+    }
+  };
 
+  const handleGoogleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log(data, 'from handleGoogleSignIn');
+    
+  };
 
   return (
     <main className="min-h-screen bg-[#f0f5f0] px-4 py-10 text-[#202a22]">
       <div className="mx-auto w-full max-w-[392px]">
         {/* Header */}
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold tracking-tight">
-            সাইন ইন
-          </h1>
+          <h1 className="text-2xl font-bold tracking-tight">সাইন ইন</h1>
 
           <p className="mt-1 text-sm text-gray-500">
             বিনা খরচে সাইন ইন করে সব বিস্তারিত দাম দেখুন।
@@ -44,16 +51,13 @@ const SignInPage = () => {
 
         {/* Register Form Card */}
         <div className="rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-5 sm:p-6">
-
           <form onSubmit={onSubmit} className="space-y-4">
-          
-
             {/* Email */}
             <div className="form-control">
               <label className="mb-1.5 text-sm font-medium">ইমেইল</label>
 
-              <input 
-              name="email"
+              <input
+                name="email"
                 type="email"
                 placeholder="you@example.com"
                 className="input h-[38px] min-h-0 w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 text-sm outline-none focus:border-green-600"
@@ -64,8 +68,8 @@ const SignInPage = () => {
             <div className="form-control">
               <label className="mb-1.5 text-sm font-medium">পাসওয়ার্ড</label>
 
-              <input 
-              name="password"
+              <input
+                name="password"
                 type="password"
                 placeholder="কমপক্ষে ৮ অক্ষর"
                 className="input h-[38px] min-h-0 w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 text-sm outline-none focus:border-green-600"
@@ -102,8 +106,9 @@ const SignInPage = () => {
 
             {/* Social Login Buttons */}
             <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
+              <button 
+              onClick={handleGoogleSignIn}
+                
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
                 <span className="text-base font-bold text-[#4285F4]">G</span>

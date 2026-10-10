@@ -27,7 +27,7 @@ const UserInfo = () => {
             className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-100"
           >
             {/* Profile Picture */}
-            <div className=" w-9 shrink-0 px-6 overflow-hidden rounded-2xl bg-green-500">
+            {/* <div className=" w-9 shrink-0 px-6 overflow-hidden rounded-2xl bg-green-500">
               {user.image ? (
                 <img
                   src={user.image}
@@ -39,7 +39,23 @@ const UserInfo = () => {
                   {user.name?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
-            </div>
+            </div> */}
+            
+{/* Profile Picture */}
+<div className="h-9 w-9 shrink-0 overflow-hidden rounded-[10px] bg-green-500">
+  {user.image ? (
+    <img
+      src={user.image}
+      alt={user.name || "User"}
+      className="h-full w-full object-cover"
+    />
+  ) : (
+    <div className="flex h-full w-full items-center justify-center font-semibold text-white">
+      {user.name?.charAt(0).toUpperCase() || "U"}
+    </div>
+  )}
+</div>
+{/* ---------------------------------- */}
 
             <span className="max-w-28 truncate text-sm font-medium text-[#202a22]">
               {user.name}
