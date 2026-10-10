@@ -4,6 +4,7 @@ import React from "react";
 import NavLinks from "./NavLinks";
 import Marquee from "./Marquee";
 import Link from "next/link";
+import UserInfo from "./UserInfo";
 
 const Navbar = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -34,12 +35,13 @@ const Navbar = () => {
 
           {/* Right div */}
           <div className="flex items-center gap-2">
-            <button className="hover:bg-gray-200 rounded-[10px] px-4  py-[8px]">
+            {/* <button className="hover:bg-gray-200 rounded-[10px] px-4  py-[8px]">
               সাইন ইন
             </button>
             <button className=" bg-[#05893E] text-white rounded-[10px] px-4  py-[8px]">
               সাইন আপ
-            </button>
+            </button> */}
+          <UserInfo />
           </div>
         </div>
       </div>

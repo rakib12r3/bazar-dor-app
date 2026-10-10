@@ -1,12 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import CategoryNavLinks from "./CategoryNavLinks";
+import baseURL from "./baseURL/BaseUrl";
 
 
 
 const NavLinks = async () => {
   const res = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/categories",
+    `${baseURL}/categories`,
   );
   const data = await res.json();
   console.log(data,'from Nav Links');

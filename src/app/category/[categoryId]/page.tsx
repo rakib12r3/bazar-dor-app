@@ -1,3 +1,4 @@
+import baseURL from "@/components/baseURL/BaseUrl";
 import CategoryProducts from "@/components/CategoryProduct";
 import ProductCard from "@/components/ProductCard";
 import { notFound } from "next/navigation";
@@ -28,7 +29,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
   console.log(categoryId);
 
   const respons = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`,
+    `${baseURL}/categories/${categoryId}`,
   );
 
   if (!respons.ok) {
@@ -38,7 +39,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
   console.log(categoryData, "from single category");
 
   const res = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`,
+    `${baseURL}/products?category=${categoryId}`,
   );
   const data:ICategoryPage[] = await res.json();
   console.log(data,'from category=');

@@ -3,6 +3,7 @@ import AllProducts from "@/components/homePage/AllProducts";
 import TopFallers from "@/components/homePage/TopFallers";
 import TopRisers from "@/components/homePage/TopRisers";
 import Image from "next/image";
+import baseURL from "@/components/baseURL/BaseUrl";
 
 interface ITopRisers {
 
@@ -26,7 +27,7 @@ interface ITopRisers {
 
 export default async function Home() {
 
-  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
+  const res = await fetch(`${baseURL}/products`);
   const data: ITopRisers[] = await res.json();
 
 

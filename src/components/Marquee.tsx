@@ -1,5 +1,6 @@
 import React from "react";
 import MarqueeText from "react-marquee-text";
+import baseURL from "./baseURL/BaseUrl";
 
 interface IMarquee {
   id: number;
@@ -14,7 +15,7 @@ interface IMarquee {
 }
 
 const Marquee = async () => {
-  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
+  const res = await fetch(`${baseURL}/products`);
   const data: IMarquee[] = await res.json();
   console.log(data, "from marquee");
 

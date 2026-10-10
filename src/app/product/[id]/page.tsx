@@ -1,3 +1,4 @@
+import baseURL from "@/components/baseURL/BaseUrl";
 import PriceDetailsCard from "@/components/PriceCard";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -39,7 +40,7 @@ const page = async ({ params }: { params: { id: number } }) => {
   };
 
   const res = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
+    `${baseURL}/products/${id}`,
   );
   const data: IDetailsPage = await res.json();
 
