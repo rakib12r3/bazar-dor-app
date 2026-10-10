@@ -38,7 +38,7 @@ const AllProducts = ({ data }: { data: IAllProduct[] }) => {
   });
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-5 my-7">
+    <div className="w-full max-w-6xl mx-auto px-5 my-7" id="সব-পণ্য">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-extrabold text-2xl">সব পণ্য</h2>

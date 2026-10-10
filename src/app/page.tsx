@@ -1,4 +1,4 @@
-import Banner from "@/components/Banner";
+import Banner from "@/components/homePage/Banner";
 import AllProducts from "@/components/homePage/AllProducts";
 import TopFallers from "@/components/homePage/TopFallers";
 import TopRisers from "@/components/homePage/TopRisers";

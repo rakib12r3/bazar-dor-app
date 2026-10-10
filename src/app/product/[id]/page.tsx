@@ -1,5 +1,6 @@
 import PriceDetailsCard from "@/components/PriceCard";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 interface IDetailsPage {
@@ -41,6 +42,10 @@ const page = async ({ params }: { params: { id: number } }) => {
     `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
   );
   const data: IDetailsPage = await res.json();
+
+  if (!res.ok) {
+  notFound();
+}
   // const marketsDetails = data.markets;
   console.log(data, "from details page shdfjhfhjha");
 
