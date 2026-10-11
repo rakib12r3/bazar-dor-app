@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Name: BazarDor
 
-## Getting Started
+### বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের বাজারদর এক জায়গায়
 
-First, run the development server:
+**BazarDor** is a web application that helps users explore the prices of essential daily products in Bangladesh. It provides an organized view of product prices, price changes, and product categories, making it easier to understand market trends at a glance.
+
+🔗 **Live Website:** https://bazar-dor-app-steel.vercel.app/
+
+## ✨ Key Features
+
+- **📊 Daily Market Prices:** Browse the prices of essential products, including rice, lentils, oil, vegetables, fish, meat, dairy products, and spices.
+- **📈 Price Change Tracking:** See which products have increased or decreased in price, along with percentage changes.
+- **🗂️ Product Categories:** Explore products through organized categories for easier navigation.
+- **🔍 Product Details:** View individual product information, including its name, price, unit, and price movement.
+- **↕️ Product Sorting:** Organize the product list to make browsing and comparing prices easier.
+- **📱 Responsive Design:** Access the website on mobile phones, tablets, and desktop devices.
+- **🇧🇩 Bengali Interface:** Explore market information through a Bengali-language user interface.
+
+## 🛠️ Technologies Used
+
+- **Next.js** — React framework for building the web application.
+- **React** — Component-based user interface development.
+- **TypeScript** — Type-safe JavaScript development.
+- **Tailwind CSS** — Utility-first styling and responsive layouts.
+- **Vercel** — Application deployment and hosting.
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm, yarn, pnpm, or bun
+- Git
+
+### Installation
+
+**1. Clone the repository**
+
+```bash
+git clone <your-github-repository-url>
+```
+
+**2. Navigate to the project directory**
+
+```bash
+cd <your-project-folder>
+```
+
+**3. Install dependencies**
+
+```bash
+npm install
+```
+
+**4. Start the development server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**5. Open the application**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 Live Demo
 
-## Learn More
+Explore the application:
 
-To learn more about Next.js, take a look at the following resources:
+**[BazarDor — Live Website](https://bazar-dor-app-steel.vercel.app/)**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚠️ Disclaimer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The displayed market prices are indicative and may vary depending on location, product quality, seller, and current market conditions. Please verify prices with local sellers before making purchasing decisions.
 
-## Deploy on Vercel
+## 👨‍💻 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Rakib Mia**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Made with ❤️ to make everyday market price information easier to explore.
