@@ -10,44 +10,52 @@ const Navbar = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
     dateStyle: "full",
   });
-  console.log(date);
 
   return (
     <>
-      <div className="w-full max-w-6xl mx-auto px-5 py-5">
-        <div className="flex justify-between items-center ">
-          {/* Left div */}
-          <Link href={"/"} className="flex items-center gap-3">
-            <div className="bg-green-700 p-3 rounded-2xl">
-              <Image
-                className="brightness-0 invert opacity-90"
-                src={Logo}
-                alt="Logo"
-                height={30}
-                width={30}
-              />
-            </div>
-            <div>
-              <p className=" font-extrabold text-lg">বাজার দর</p>
-              <span className="text-[#1D271F] text-sm">{date}</span>
-            </div>
-          </Link>
+      <div className="sticky top-0 z-50 bg-white shadow-sm">
+        <div className="mx-auto w-full max-w-6xl px-3 sm:px-5">
+          <div className="flex items-center justify-between gap-3 py-3 sm:py-4 md:py-5">
+            {/* Left div */}
+            <Link
+              href="/"
+              className="flex min-w-0 items-center gap-2 sm:gap-3"
+            >
+              <div className="shrink-0 rounded-xl bg-green-700 p-2 sm:rounded-2xl sm:p-3">
+                <Image
+                  className="brightness-0 invert opacity-90"
+                  src={Logo}
+                  alt="Logo"
+                  height={30}
+                  width={30}
+                  priority
+                  sizes="(max-width: 640px) 24px, 30px"
+                />
+              </div>
 
-          {/* Right div */}
-          <div className="flex items-center gap-2">
-            {/* <button className="hover:bg-gray-200 rounded-[10px] px-4  py-[8px]">
-              সাইন ইন
-            </button>
-            <button className=" bg-[#05893E] text-white rounded-[10px] px-4  py-[8px]">
-              সাইন আপ
-            </button> */}
-          <UserInfo />
+              <div className="min-w-0">
+                <p className="text-base font-extrabold sm:text-lg">
+                  বাজার দর
+                </p>
+
+                <span className="block text-xs text-[#1D271F] sm:text-sm">
+                  {date}
+                </span>
+              </div>
+            </Link>
+
+            {/* Right div */}
+            <div className="flex shrink-0 items-center gap-2">
+              <UserInfo />
+            </div>
           </div>
         </div>
+
+        <NavLinks />
       </div>
-      <NavLinks />
-      <div className="border border-gray-100">
-      <Marquee />
+
+      <div className="w-full overflow-hidden border-y border-gray-100">
+        <Marquee />
       </div>
     </>
   );

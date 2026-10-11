@@ -1,7 +1,8 @@
-'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 interface INavs {
   id: string;
@@ -10,14 +11,12 @@ interface INavs {
   icon: string;
 }
 
+const CategoryNavLinks = ({ data }: { data: INavs[] }) => {
+  const pathname = usePathname();
 
-
-const CategoryNavLinks = ({data}:{data:INavs[]}) => {
-   const pathname = usePathname();
   return (
- 
-   <div className="border-y border-gray-100">
-      <div className="mx-auto flex w-full max-w-6xl gap-5 overflow-x-auto px-5 py-2">
+    <div className="border-y border-gray-100">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-2 overflow-x-auto px-3 py-2 sm:gap-3 sm:px-5 md:gap-4 lg:gap-5">
         {data.map((item) => {
           const isActive = pathname === `/category/${item.slug}`;
 
@@ -25,16 +24,15 @@ const CategoryNavLinks = ({data}:{data:INavs[]}) => {
             <Link
               href={`/category/${item.slug}`}
               key={item.id}
-              className={`shrink-0 rounded-[10px] px-3 py-1 transition-colors ${
+              aria-current={isActive ? "page" : undefined}
+              className={`shrink-0 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors sm:px-4 sm:text-base ${
                 isActive
                   ? "bg-[#05893E] text-white"
-                  : "hover:bg-gray-200"
+                  : "text-gray-700 hover:bg-gray-100"
               }`}
             >
-              <p>
-                <span>{item.icon} </span>
-                {item.nameBn}
-              </p>
+              <span>{item.icon}</span>{" "}
+              {item.nameBn}
             </Link>
           );
         })}

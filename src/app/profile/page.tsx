@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
@@ -17,7 +16,6 @@ const ProfilePage = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  
   useEffect(() => {
     if (user?.name) {
       setName(user.name);
@@ -47,7 +45,7 @@ const ProfilePage = () => {
   };
 
   // Update name functionality
-  const handleUpdateName = async (e: React.SubmitEvent<HTMLElement>) => {
+  const handleUpdateName = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const trimmedName = name.trim();
@@ -92,7 +90,7 @@ const ProfilePage = () => {
   // Session loading
   if (isPending) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0]">
+      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0] px-4">
         <span className="loading loading-spinner loading-lg text-[#07883f]" />
       </main>
     );
@@ -101,17 +99,19 @@ const ProfilePage = () => {
   // Not signed in
   if (!user) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0] px-4">
-        <div className="w-full max-w-md rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-8 text-center">
-          <h1 className="text-2xl font-bold">আপনি সাইন ইন করেননি</h1>
+      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0] px-3 py-6 sm:px-5">
+        <div className="w-full max-w-md rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-5 text-center sm:p-8">
+          <h1 className="text-xl font-bold sm:text-2xl">
+            আপনি সাইন ইন করেননি
+          </h1>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm leading-relaxed text-gray-500 sm:text-base">
             প্রোফাইল দেখতে প্রথমে আপনার অ্যাকাউন্টে সাইন ইন করুন।
           </p>
 
           <Link
             href="/signin"
-            className="btn mt-5 border-0 bg-[#07883f] text-white hover:bg-[#067735]"
+            className="btn mt-5 min-h-11 w-full border-0 bg-[#07883f] text-white hover:bg-[#067735] sm:w-auto"
           >
             সাইন ইন করুন
           </Link>
@@ -120,29 +120,26 @@ const ProfilePage = () => {
     );
   }
 
-
-
-
   return (
-    <main className="min-h-screen bg-[#f0f5f0] px-4 py-10 text-[#202a22] sm:px-6">
+    <main className="min-h-screen bg-[#f0f5f0] px-3 py-6 text-[#202a22] sm:px-5 sm:py-10">
       <div className="mx-auto w-full max-w-5xl">
         {/* Page Header */}
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <header className="mb-5 sm:mb-8">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             আমার প্রোফাইল
           </h1>
 
-          <p className="mt-1 text-base text-gray-500 sm:text-lg">
+          <p className="mt-1 text-sm text-gray-500 sm:text-base md:text-lg">
             আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
           </p>
         </header>
 
         {/* User Information Card */}
-        <section className="mb-9 flex flex-col gap-5 rounded-3xl border border-[#dfe8df] bg-[#fafcfb] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-          <div className="flex min-w-0 items-center gap-5">
+        <section className="mb-6 flex flex-col gap-4 rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-4 sm:mb-9 sm:gap-5 sm:rounded-3xl sm:p-6 md:flex-row md:items-center md:justify-between md:p-7">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-5">
             {/* Profile Picture */}
-            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-[#07883f]">
-              {user?.image ? (
+            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#07883f] sm:h-16 sm:w-16">
+              {user.image ? (
                 <img
                   src={user.image}
                   alt={user.name || "User"}
@@ -150,20 +147,20 @@ const ProfilePage = () => {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-2xl font-semibold text-white">
-                  {user?.name?.charAt(0).toUpperCase() || "U"}
+                <div className="flex h-full w-full items-center justify-center text-xl font-semibold text-white sm:text-2xl">
+                  {user.name?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
             </div>
 
             {/* User Details */}
-            <div className="min-w-0">
-              <h2 className="truncate text-2xl font-semibold">
-                {user?.name}
+            <div className="min-w-0 flex-1">
+              <h2 className="break-words text-lg font-semibold sm:text-xl md:text-2xl">
+                {user.name}
               </h2>
 
-              <p className="mt-1 truncate text-base text-gray-500 sm:text-lg">
-                {user?.email}
+              <p className="mt-1 break-all text-sm text-gray-500 sm:text-base md:text-lg">
+                {user.email}
               </p>
             </div>
           </div>
@@ -173,20 +170,21 @@ const ProfilePage = () => {
             type="button"
             onClick={handleSignOut}
             disabled={isSigningOut}
-            className="btn h-12 min-h-0 shrink-0 rounded-xl border border-red-500 bg-transparent px-5 text-base font-semibold text-red-500 shadow-none hover:border-red-600 hover:bg-red-50 disabled:opacity-60"
+            className="btn h-11 min-h-0 w-full shrink-0 rounded-xl border border-red-500 bg-transparent px-4 text-sm font-semibold text-red-500 shadow-none hover:border-red-600 hover:bg-red-50 disabled:opacity-60 sm:h-12 sm:text-base md:w-auto"
           >
             {isSigningOut ? (
               <span className="loading loading-spinner loading-sm" />
             ) : (
               <span className="text-lg">↪</span>
             )}
+
             {isSigningOut ? "সাইন আউট হচ্ছে..." : "সাইন আউট"}
           </button>
         </section>
 
         {/* Update Name Card */}
-        <section className="rounded-3xl border border-[#dfe8df] bg-[#fafcfb] p-5 sm:p-7">
-          <h2 className="mb-6 text-2xl font-bold">
+        <section className="rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-4 sm:rounded-3xl sm:p-6 md:p-7">
+          <h2 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">
             তথ্য
           </h2>
 
@@ -194,7 +192,7 @@ const ProfilePage = () => {
             <div className="form-control w-full">
               <label
                 htmlFor="name"
-                className="mb-2 text-lg font-medium"
+                className="mb-2 text-base font-medium sm:text-lg"
               >
                 নাম
               </label>
@@ -209,14 +207,14 @@ const ProfilePage = () => {
                 maxLength={100}
                 required
                 disabled={isSaving}
-                className="input h-[60px] min-h-0 w-full rounded-xl border border-[#cfd7cf] bg-transparent px-4 text-base text-[#202a22] outline-none focus:border-[#07883f] focus:outline-none sm:text-lg"
+                className="input h-12 min-h-0 w-full rounded-xl border border-[#cfd7cf] bg-transparent px-3 text-base text-[#202a22] outline-none focus:border-[#07883f] focus:outline-none sm:h-[60px] sm:px-4 sm:text-lg"
               />
             </div>
 
             <button
               type="submit"
               disabled={isSaving || !name.trim()}
-              className="btn mt-4 h-[60px] min-h-0 rounded-xl border-0 bg-[#07883f] px-6 text-base font-semibold text-white shadow-md hover:bg-[#067735] disabled:cursor-not-allowed disabled:opacity-60 sm:text-lg"
+              className="btn mt-4 h-12 min-h-0 w-full rounded-xl border-0 bg-[#07883f] px-5 text-base font-semibold text-white shadow-md hover:bg-[#067735] disabled:cursor-not-allowed disabled:opacity-60 sm:h-[60px] sm:w-auto sm:px-6 sm:text-lg"
             >
               {isSaving ? (
                 <>

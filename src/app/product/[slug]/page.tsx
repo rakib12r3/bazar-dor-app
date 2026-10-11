@@ -28,7 +28,11 @@ interface IDetailsPage {
   }[];
 }
 
-const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const Page = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   const { slug } = await params;
 
   const unitBn: Record<string, string> = {
@@ -46,13 +50,17 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const products: IDetailsPage[] = await listRes.json();
 
-  const matchedProduct = products.find((product) => product.slug === slug);
+  const matchedProduct = products.find(
+    (product) => product.slug === slug,
+  );
 
   if (!matchedProduct) {
     notFound();
   }
 
-  const res = await fetch(`${baseURL}/products/${matchedProduct.id}`);
+  const res = await fetch(
+    `${baseURL}/products/${matchedProduct.id}`,
+  );
 
   if (!res.ok) {
     notFound();
@@ -61,37 +69,44 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const data: IDetailsPage = await res.json();
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5">
-      <div className="my-5 flex gap-2">
-        <Link href="/" className="hover:underline">
+    <div className="mx-auto w-full max-w-6xl px-3 sm:px-5">
+      <div className="my-4 flex flex-wrap items-center gap-2 text-sm text-gray-600 sm:my-5 sm:text-base">
+        <Link href="/" className="shrink-0 hover:underline">
           হোম
         </Link>
 
         <span>›</span>
 
-        <Link href={`/category/${data.category}`} className="hover:underline">
+        <Link
+          href={`/category/${data.category}`}
+          className="shrink-0 hover:underline"
+        >
           {data.categoryNameBn}
         </Link>
 
         <span>›</span>
 
-        <p>{data.nameBn}</p>
+        <p className="min-w-0 break-words font-medium text-gray-900">
+          {data.nameBn}
+        </p>
       </div>
 
-      <div className="flex flex-col justify-between gap-5 rounded-3xl bg-white px-5 py-3 md:flex-row md:items-center">
-        <div className="flex items-center gap-5">
-          <div className="flex h-[70px] w-[70px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
+      <div className="flex flex-col gap-4 rounded-2xl bg-white p-3 sm:gap-5 sm:rounded-3xl sm:p-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex min-w-0 items-start gap-3 sm:items-center sm:gap-5">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#f0f5f0] text-2xl sm:h-[70px] sm:w-[70px] sm:rounded-[15px] sm:text-[30px]">
             {data.image || data.categoryIcon}
           </div>
 
           <div className="min-w-0 flex-1 leading-tight">
-            <h2 className="text-3xl font-bold text-[#111c18]">{data.nameBn}</h2>
+            <h2 className="break-words text-xl font-bold text-[#111c18] sm:text-2xl md:text-3xl">
+              {data.nameBn}
+            </h2>
 
-            <p className="text-sm text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 sm:text-sm">
               {`প্রতি ${unitBn[data.unit] ?? data.unit} · ${data.categoryNameBn}`}
             </p>
 
-            <p className="mt-2 text-sm">
+            <p className="mt-2 text-xs leading-relaxed sm:text-sm">
               {`গতকালের তুলনায় আজ দাম · ${
                 data.change.dir === "up"
                   ? `বেড়েছে ${(data.today - data.yesterday).toLocaleString(
@@ -107,19 +122,21 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-[#FAFCFA] p-5">
-          <p className="text-sm text-gray-500">আজকের দাম</p>
+        <div className="w-full rounded-2xl bg-[#FAFCFA] p-4 sm:rounded-3xl sm:p-5 md:w-auto md:min-w-48">
+          <p className="text-center text-sm text-gray-500">
+            আজকের দাম
+          </p>
 
-          <p className="text-center text-3xl font-bold">
+          <p className="mt-1 text-center text-2xl font-bold sm:text-3xl">
             {data.today.toLocaleString("bn-BD")}
           </p>
 
-          <p className="text-center text-sm text-gray-500">
+          <p className="text-center text-xs text-gray-500 sm:text-sm">
             {`টাকা / ${unitBn[data.unit] ?? data.unit}`}
           </p>
 
           <div
-            className={`badge mt-2 shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm ${
+            className={`badge mt-3 flex w-fit max-w-full mx-auto shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-xs sm:text-sm ${
               data.change.dir === "up"
                 ? "bg-[#f0f5f0] text-red-500"
                 : data.change.dir === "down"
@@ -135,12 +152,14 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
                   : "—"}
             </span>
 
-            <span>{Math.abs(data.change.pct).toLocaleString("bn-BD")}%</span>
+            <span>
+              {Math.abs(data.change.pct).toLocaleString("bn-BD")}%
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-4 mb-8 sm:mt-6 sm:mb-10">
         <PriceDetailsCard data={data} />
       </div>
     </div>

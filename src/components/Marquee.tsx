@@ -27,27 +27,40 @@ const Marquee = async () => {
   };
 
   return (
-    <MarqueeText 
-    
-      direction="right"
-      duration={10}
-      pauseOnHover={true}
-      
-    >
-      {data.map((p) => (
-        <div className="flex items-center gap-2 ml-7xl  py-1 px-9 border-r border-gray-100" key={p.id}>
-      
-            
-          <p>{p.image}</p>
-          <p>{p.nameBn}</p>
-          <p>{`${Number(p.today).toLocaleString("bn-BD")}টাকা/${unitBn[p.unit] || p.unit} `}</p>
-          <p
-            className={`${p.change.dir === "up" ? "text-red-500" : "text-green-500"}`}
-            >{`${p.change.dir === "up" ? "▲" : "▼"} ${Math.abs(p.change.pct).toLocaleString("bn-BD")}%`}</p>
-         
-        </div>
-      ))}
-    </MarqueeText>
+    <div className="w-full overflow-hidden">
+      <MarqueeText
+        direction="right"
+        duration={10}
+        pauseOnHover={true}
+      >
+        {data.map((p) => (
+          <div
+            className="ml-4 flex shrink-0 items-center gap-1.5 whitespace-nowrap border-r border-gray-100 px-3 py-2 sm:ml-6 sm:gap-2 sm:px-5 sm:py-1 md:ml-8 md:px-8"
+            key={p.id}
+          >
+            <p className="text-sm sm:text-base">{p.image}</p>
+
+            <p className="text-xs sm:text-sm md:text-base">
+              {p.nameBn}
+            </p>
+
+            <p className="text-xs sm:text-sm md:text-base">
+              {`${Number(p.today).toLocaleString("bn-BD")}টাকা/${unitBn[p.unit] || p.unit}`}
+            </p>
+
+            <p
+              className={`text-xs sm:text-sm ${
+                p.change.dir === "up"
+                  ? "text-red-500"
+                  : "text-green-500"
+              }`}
+            >
+              {`${p.change.dir === "up" ? "▲" : "▼"} ${Math.abs(p.change.pct).toLocaleString("bn-BD")}%`}
+            </p>
+          </div>
+        ))}
+      </MarqueeText>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "../ProductCard";
 
- interface ITopRisers {
+interface ITopRisers {
   id: number;
   slug: string;
   nameBn: string;
@@ -20,20 +20,24 @@ import ProductCard from "../ProductCard";
   };
 }
 
-const TopRisers = async ({data}:{data:ITopRisers[]}) => {
-  // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
-  // const data: ITopRisers[] = await res.json();
+const TopRisers = async ({ data }: { data: ITopRisers[] }) => {
   const topRisers = data
     .filter((p) => p.change.dir === "up")
     .sort((a, b) => Number(b.change.pct) - Number(a.change.pct))
     .slice(0, 6);
+
   console.log(topRisers, "from TopRisers");
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-5 ">
-      <h2 className="flex gap-3 items-baseline mt-5 mb-3"><span className="text-red-500">▲</span>
-<span className="font-extrabold text-2xl">আজ দাম বেড়েছে</span></h2>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="mx-auto mt-5 w-full max-w-6xl px-3 sm:px-5">
+      <h2 className="mb-3 mt-5 flex items-baseline gap-2 sm:gap-3">
+        <span className="text-red-500">▲</span>
+        <span className="text-xl font-extrabold sm:text-2xl">
+          আজ দাম বেড়েছে
+        </span>
+      </h2>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {topRisers.map((product) => (
           <ProductCard key={product.id} item={product} />
         ))}
