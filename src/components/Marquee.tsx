@@ -27,10 +27,10 @@ const Marquee = async () => {
   };
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full overflow-hidden bg-white">
       <MarqueeText
         direction="right"
-        duration={10}
+        duration={9}
         pauseOnHover={true}
       >
         {data.map((p) => (
