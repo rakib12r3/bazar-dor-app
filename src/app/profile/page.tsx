@@ -1,0 +1,237 @@
+
+"use client";
+
+import { useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import Link from "next/link";
+
+const ProfilePage = () => {
+  const router = useRouter();
+
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+
+  const [name, setName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  
+  useEffect(() => {
+    if (user?.name) {
+      setName(user.name);
+    }
+  }, [user?.name]);
+
+  // Sign out functionality
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+
+    try {
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+        return;
+      }
+
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
+      router.replace("/signin");
+      router.refresh();
+    } catch {
+      toast.error("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
+      setIsSigningOut(false);
+    }
+  };
+
+  // Update name functionality
+  const handleUpdateName = async (e: React.SubmitEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    const trimmedName = name.trim();
+
+    if (!trimmedName) {
+      toast.error("আপনার নাম লিখুন।");
+      return;
+    }
+
+    if (trimmedName.length < 2) {
+      toast.error("নাম কমপক্ষে ২ অক্ষরের হতে হবে।");
+      return;
+    }
+
+    if (trimmedName === user?.name) {
+      toast.error("নামে কোনো পরিবর্তন করা হয়নি।");
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      const { error } = await authClient.updateUser({
+        name: trimmedName,
+      });
+
+      if (error) {
+        toast.error("নাম আপডেট করা যায়নি। আবার চেষ্টা করুন।");
+        console.error(error);
+        return;
+      }
+
+      toast.success("আপনার নাম সফলভাবে আপডেট হয়েছে।");
+    } catch (error) {
+      console.error(error);
+      toast.error("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Session loading
+  if (isPending) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0]">
+        <span className="loading loading-spinner loading-lg text-[#07883f]" />
+      </main>
+    );
+  }
+
+  // Not signed in
+  if (!user) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#f0f5f0] px-4">
+        <div className="w-full max-w-md rounded-2xl border border-[#dfe8df] bg-[#fafcfb] p-8 text-center">
+          <h1 className="text-2xl font-bold">আপনি সাইন ইন করেননি</h1>
+
+          <p className="mt-2 text-sm text-gray-500">
+            প্রোফাইল দেখতে প্রথমে আপনার অ্যাকাউন্টে সাইন ইন করুন।
+          </p>
+
+          <Link
+            href="/signin"
+            className="btn mt-5 border-0 bg-[#07883f] text-white hover:bg-[#067735]"
+          >
+            সাইন ইন করুন
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+
+
+
+  return (
+    <main className="min-h-screen bg-[#f0f5f0] px-4 py-10 text-[#202a22] sm:px-6">
+      <div className="mx-auto w-full max-w-5xl">
+        {/* Page Header */}
+        <header className="mb-8">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            আমার প্রোফাইল
+          </h1>
+
+          <p className="mt-1 text-base text-gray-500 sm:text-lg">
+            আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
+          </p>
+        </header>
+
+        {/* User Information Card */}
+        <section className="mb-9 flex flex-col gap-5 rounded-3xl border border-[#dfe8df] bg-[#fafcfb] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+          <div className="flex min-w-0 items-center gap-5">
+            {/* Profile Picture */}
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-[#07883f]">
+              {user?.image ? (
+                <img
+                  src={user.image}
+                  alt={user.name || "User"}
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-2xl font-semibold text-white">
+                  {user?.name?.charAt(0).toUpperCase() || "U"}
+                </div>
+              )}
+            </div>
+
+            {/* User Details */}
+            <div className="min-w-0">
+              <h2 className="truncate text-2xl font-semibold">
+                {user?.name}
+              </h2>
+
+              <p className="mt-1 truncate text-base text-gray-500 sm:text-lg">
+                {user?.email}
+              </p>
+            </div>
+          </div>
+
+          {/* Sign Out */}
+          <button
+            type="button"
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+            className="btn h-12 min-h-0 shrink-0 rounded-xl border border-red-500 bg-transparent px-5 text-base font-semibold text-red-500 shadow-none hover:border-red-600 hover:bg-red-50 disabled:opacity-60"
+          >
+            {isSigningOut ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : (
+              <span className="text-lg">↪</span>
+            )}
+            {isSigningOut ? "সাইন আউট হচ্ছে..." : "সাইন আউট"}
+          </button>
+        </section>
+
+        {/* Update Name Card */}
+        <section className="rounded-3xl border border-[#dfe8df] bg-[#fafcfb] p-5 sm:p-7">
+          <h2 className="mb-6 text-2xl font-bold">
+            তথ্য
+          </h2>
+
+          <form onSubmit={handleUpdateName}>
+            <div className="form-control w-full">
+              <label
+                htmlFor="name"
+                className="mb-2 text-lg font-medium"
+              >
+                নাম
+              </label>
+
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="আপনার নাম লিখুন"
+                maxLength={100}
+                required
+                disabled={isSaving}
+                className="input h-[60px] min-h-0 w-full rounded-xl border border-[#cfd7cf] bg-transparent px-4 text-base text-[#202a22] outline-none focus:border-[#07883f] focus:outline-none sm:text-lg"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSaving || !name.trim()}
+              className="btn mt-4 h-[60px] min-h-0 rounded-xl border-0 bg-[#07883f] px-6 text-base font-semibold text-white shadow-md hover:bg-[#067735] disabled:cursor-not-allowed disabled:opacity-60 sm:text-lg"
+            >
+              {isSaving ? (
+                <>
+                  <span className="loading loading-spinner loading-sm" />
+                  আপডেট হচ্ছে...
+                </>
+              ) : (
+                "আপডেট করুন"
+              )}
+            </button>
+          </form>
+        </section>
+      </div>
+    </main>
+  );
+};
+
+export default ProfilePage;

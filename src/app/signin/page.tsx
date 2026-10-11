@@ -1,33 +1,55 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 // import { Github, ArrowLeft } from "lucide-react";
 
 const SignInPage = () => {
-  const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const user = Object.fromEntries(formData.entries()) as {
-      email: string;
-      password: string;
-    };
 
+  
+const router = useRouter();
+
+const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
+
+  if (!email || !password) {
+    toast.error("ইমেইল ও পাসওয়ার্ড লিখুন।");
+    return;
+  }
+
+  try {
     const { data, error } = await authClient.signIn.email({
-      ...user,
+      email,
+      password,
       callbackURL: "/",
     });
 
-    if (data) {
-      toast.success("Sign In Successful");
-      console.log(data);
-    }
     if (error) {
-      toast.error("ফর্মের তথ্য ঠিক করে আবার চেষ্টা করুন।");
-      console.log(error);
+      toast.error("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
+      // console.error(error);
+      return;
     }
-  };
+
+    if (data) {
+      toast.success("সফলভাবে সাইন ইন হয়েছে!");
+      router.replace("/");
+      router.refresh();
+    }
+  } catch (error) {
+    // console.error(error);
+    toast.error("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+  }
+};
+
 
   const handleGoogleSignIn = async () => {
     const data = await authClient.signIn.social({
@@ -38,7 +60,8 @@ const SignInPage = () => {
   };
 
   const handleGithubSignIn = async () => {
-    const data = await authClient.signIn.social({
+   
+    await authClient.signIn.social({
       provider: "github",
     });
   }
@@ -82,25 +105,13 @@ const SignInPage = () => {
               />
             </div>
 
-            {/* Confirm Password */}
-            {/* <div className="form-control">
-              <label className="mb-1.5 text-sm font-medium">
-                পাসওয়ার্ড নিশ্চিত করুন
-              </label>
-
-              <input
-                type="password"
-                placeholder="আবার লিখুন"
-                className="input h-[38px] min-h-0 w-full rounded-lg border border-[#dfe8df] bg-transparent px-3 text-sm outline-none focus:border-green-600"
-              />
-            </div> */}
 
             {/* Submit Button */}
             <button
               type="submit"
               className="btn min-h-0 h-[38px] w-full rounded-lg border-0 bg-[#07883f] text-sm font-semibold text-white shadow-md hover:bg-[#067735]"
             >
-              অ্যাকাউন্ট তৈরি করুন
+              সাইন ইন
             </button>
 
             {/* Divider */}
@@ -117,7 +128,7 @@ const SignInPage = () => {
                 
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
-                <span className="text-base font-bold text-[#4285F4]">G</span>
+                <span className="text-base font-bold text-[#4285F4]"><FcGoogle /></span>
                 Google দিয়ে চালিয়ে যান
               </button>
 
@@ -125,7 +136,7 @@ const SignInPage = () => {
               onClick={handleGithubSignIn}
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
-                {/* <Github size={15} /> */}
+                <FaGithub size={20} />
                 GitHub দিয়ে চালিয়ে যান
               </button>
             </div>
