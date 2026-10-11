@@ -1,7 +1,7 @@
+
 import Image from "next/image";
 import React from "react";
 import BannerImage from "@/assets/bazar-hero.png";
-import Link from "next/link";
 
 const Banner = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -10,31 +10,31 @@ const Banner = () => {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-3 sm:px-5">
-      <div className="my-4 rounded-2xl bg-white px-4 py-5 sm:my-6 sm:px-6 md:px-8 md:py-8">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center md:gap-8">
-          <div className="w-full md:max-w-[600px]">
-            <p className="mt-2 sm:mt-3">
-              <span className="inline-block rounded-2xl bg-green-100 px-3 py-1 text-xs text-[#05893E] sm:text-sm">
+      <div className="my-4 rounded-2xl border border-[#dfe8df] bg-[#fafcfb] px-4 py-4 sm:my-6 sm:px-6 md:px-3 md:py-2">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center md:gap-6">
+          <div className=" md:max-w-[600px]">
+            <p className="mt-1">
+              <span className="inline-block rounded-full bg-[#e1f3e7] px-2.5 py-1 text-[10px] font-medium text-[#05893E] sm:text-xs">
                 {date}
               </span>
             </p>
 
-            <h1 className="py-2 text-2xl font-extrabold leading-snug sm:text-3xl md:text-4xl">
+            <h1 className="py-2 text-xl font-extrabold leading-tight tracking-tight text-[#202a22] sm:text-2xl md:text-[28px]">
               আজকের বাজারের দাম এক নজরে
             </h1>
 
-            <p className="py-3 text-sm leading-7 text-gray-500 sm:py-4 sm:text-base">
+            <p className="py-2 text-xs leading-5 text-gray-500 sm:text-sm sm:leading-6">
               চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম —
               বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং
               দামের পরিবর্তন এক জায়গায়।
             </p>
 
-            <Link
+            <a
               href="#সব-পণ্য"
-              className="inline-block rounded-[10px] bg-[#05893E] px-4 py-2 text-sm text-white transition-colors hover:bg-green-800 sm:px-5 sm:text-base"
+              className="mt-3 inline-block rounded-lg bg-[#05893E] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-green-800 sm:text-sm"
             >
               সব পণ্য দেখুন
-            </Link>
+            </a>
           </div>
 
           <div className="w-full md:flex-1">

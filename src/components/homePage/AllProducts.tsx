@@ -40,7 +40,7 @@ const AllProducts = ({ data }: { data: IAllProduct[] }) => {
   });
 
   return (
-    <div
+    <div 
       className="mx-auto my-6 w-full max-w-6xl px-3 sm:my-7 sm:px-5"
       id="সব-পণ্য"
     >

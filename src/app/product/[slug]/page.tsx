@@ -68,6 +68,10 @@ const Page = async ({
 
   const data: IDetailsPage = await res.json();
 
+
+
+
+
   return (
     <div className="mx-auto w-full max-w-6xl px-3 sm:px-5">
       <div className="my-4 flex flex-wrap items-center gap-2 text-sm text-gray-600 sm:my-5 sm:text-base">
@@ -103,7 +107,7 @@ const Page = async ({
             </h2>
 
             <p className="mt-1 text-xs text-gray-500 sm:text-sm">
-              {`প্রতি ${unitBn[data.unit] ?? data.unit} · ${data.categoryNameBn}`}
+              {`প্রতি ${unitBn[data.unit] ?? data.unit} · ${data.nameBn}`}
             </p>
 
             <p className="mt-2 text-xs leading-relaxed sm:text-sm">
