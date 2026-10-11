@@ -30,6 +30,10 @@ interface IDetailsPage {
 }
 
 const page = async ({ params }: { params: { id: number } }) => {
+
+
+
+
   const { id } = await params;
 
   const unitBn: Record<string, string> = {

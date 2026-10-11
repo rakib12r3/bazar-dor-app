@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
 const SignUpPage = () => {
@@ -192,8 +193,8 @@ const SignUpPage = () => {
           href="/"
           className="mt-5 flex items-center justify-center gap-1.5 py-1 text-sm text-gray-500 transition-colors hover:text-[#07883f]"
         >
-          {/* <ArrowLeft size={14} /> */}
-          হোম পেজে ফিরে যান
+          
+          হোম পেজে ফিরে যান <FaArrowRightFromBracket />
         </Link>
       </div>
     </main>

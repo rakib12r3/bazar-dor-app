@@ -1,10 +1,11 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 // import { Github, ArrowLeft } from "lucide-react";
 
@@ -12,6 +13,19 @@ const SignInPage = () => {
 
   
 const router = useRouter();
+
+// --
+const searchParams = useSearchParams();
+
+React.useEffect(() => {
+  if (searchParams.get("message") === "login-required") {
+    toast.error("এই পেজটি দেখতে আগে লগইন করুন!", {
+      id: "login-required",
+    });
+  }
+}, [searchParams]);
+// --
+
 
 const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -48,7 +62,7 @@ const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     // console.error(error);
     toast.error("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
   }
-};
+}; 
 
 
   const handleGoogleSignIn = async () => {
@@ -124,6 +138,7 @@ const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
             {/* Social Login Buttons */}
             <div className="grid grid-cols-2 gap-2">
               <button 
+              type="button"
               onClick={handleGoogleSignIn}
                 
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
@@ -132,7 +147,8 @@ const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
                 Google দিয়ে চালিয়ে যান
               </button>
 
-              <button
+              <button 
+              type="button"
               onClick={handleGithubSignIn}
                 className="btn min-h-0 h-[38px] rounded-lg border border-[#dfe8df] bg-transparent px-2 text-xs font-semibold text-[#202a22] shadow-none hover:bg-[#f0f5f0] sm:text-sm"
               >
@@ -143,12 +159,12 @@ const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 
             {/* Login Link */}
             <p className="pt-0.5 text-center text-sm text-[#424b44]">
-              অ্যাকাউন্ট আছে?{" "}
+              অ্যাকাউন্ট নেই?{" "}
               <Link
-                href="/login"
+                href="/signup"
                 className="font-medium text-[#07883f] hover:underline"
               >
-                সাইন ইন করুন
+                 সাইন আপ করুন
               </Link>
             </p>
           </form>
@@ -160,7 +176,7 @@ const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
           className="mt-5 flex items-center justify-center gap-1.5 py-1 text-sm text-gray-500 transition-colors hover:text-[#07883f]"
         >
           {/* <ArrowLeft size={14} /> */}
-          হোম পেজে ফিরে যান
+          হোম পেজে ফিরে যান <FaArrowRightFromBracket />
         </Link>
       </div>
     </main>
