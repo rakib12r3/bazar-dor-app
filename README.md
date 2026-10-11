@@ -68,7 +68,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🌐 Live Demo
 
-Explore the deployed application:
+Explore the application:
 
 **[BazarDor — Live Website](https://bazar-dor-app-steel.vercel.app/)**
 
