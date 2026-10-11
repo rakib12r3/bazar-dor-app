@@ -22,9 +22,6 @@ if(!user){
   return NextResponse.redirect(url);
 }
 return NextResponse.next();
-
-
-  // return NextResponse.redirect(new URL('/', request.url))
 }
  
 export const config = {

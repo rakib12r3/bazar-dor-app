@@ -2,7 +2,6 @@ import baseURL from "@/components/baseURL/BaseUrl";
 import PriceDetailsCard from "@/components/PriceCard";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import React from "react";
 
 interface IDetailsPage {
   id: number;
@@ -18,7 +17,7 @@ interface IDetailsPage {
   lastWeek: number;
   lastMonth: number;
   change: {
-    dir: "up" | "down";
+    dir: "up" | "down" | "same";
     pct: number;
   };
   markets: {
@@ -29,12 +28,8 @@ interface IDetailsPage {
   }[];
 }
 
-const page = async ({ params }: { params: { id: number } }) => {
-
-
-
-
-  const { id } = await params;
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
 
   const unitBn: Record<string, string> = {
     kg: "কেজি",
@@ -43,67 +38,93 @@ const page = async ({ params }: { params: { id: number } }) => {
     dozen: "ডজন",
   };
 
-  const res = await fetch(
-    `${baseURL}/products/${id}`,
-  );
-  const data: IDetailsPage = await res.json();
+  const listRes = await fetch(`${baseURL}/products`);
+
+  if (!listRes.ok) {
+    throw new Error("Failed to fetch products");
+  }
+
+  const products: IDetailsPage[] = await listRes.json();
+
+  const matchedProduct = products.find((product) => product.slug === slug);
+
+  if (!matchedProduct) {
+    notFound();
+  }
+
+  const res = await fetch(`${baseURL}/products/${matchedProduct.id}`);
 
   if (!res.ok) {
-  notFound();
-}
-  // const marketsDetails = data.markets;
-  console.log(data, "from details page shdfjhfhjha");
+    notFound();
+  }
+
+  const data: IDetailsPage = await res.json();
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-5">
-      <div className="flex gap-2 my-5">
-        <Link href={"/"} className="hover:underline">হোম</Link><span>›</span>
-        <Link href={`/category/${data.category}`} className="hover:underline">{data.categoryNameBn}</Link><span>›</span>
+    <div className="mx-auto w-full max-w-6xl px-5">
+      <div className="my-5 flex gap-2">
+        <Link href="/" className="hover:underline">
+          হোম
+        </Link>
+
+        <span>›</span>
+
+        <Link href={`/category/${data.category}`} className="hover:underline">
+          {data.categoryNameBn}
+        </Link>
+
+        <span>›</span>
+
         <p>{data.nameBn}</p>
       </div>
-      <div className="flex justify-between items-center bg-white px-5 py-3 rounded-3xl">
+
+      <div className="flex flex-col justify-between gap-5 rounded-3xl bg-white px-5 py-3 md:flex-row md:items-center">
         <div className="flex items-center gap-5">
-          {/* Product Icon */}
           <div className="flex h-[70px] w-[70px] shrink-0 items-center justify-center rounded-[15px] bg-[#f0f5f0] text-[30px]">
             {data.image || data.categoryIcon}
           </div>
 
-          {/* Product Name */}
           <div className="min-w-0 flex-1 leading-tight">
-            <h2 className="text-3xl  font-bold text-[#111c18]">
-              {data.nameBn}
-            </h2>
-            <p className="text-gray-500 text-sm">{`প্রতি ${unitBn[data.unit]} · ${data.categoryNameBn}`}</p>
+            <h2 className="text-3xl font-bold text-[#111c18]">{data.nameBn}</h2>
 
-            <p>
+            <p className="text-sm text-gray-500">
+              {`প্রতি ${unitBn[data.unit] ?? data.unit} · ${data.categoryNameBn}`}
+            </p>
+
+            <p className="mt-2 text-sm">
               {`গতকালের তুলনায় আজ দাম · ${
                 data.change.dir === "up"
                   ? `বেড়েছে ${(data.today - data.yesterday).toLocaleString(
                       "bn-BD",
-                    )}টাকা`
+                    )} টাকা`
                   : data.change.dir === "down"
                     ? `কমেছে ${(data.yesterday - data.today).toLocaleString(
                         "bn-BD",
-                      )}টাকা`
+                      )} টাকা`
                     : "অপরিবর্তিত"
               }`}
             </p>
           </div>
         </div>
-        <div className="bg-[#FAFCFA] p-5 rounded-3xl">
+
+        <div className="rounded-3xl bg-[#FAFCFA] p-5">
           <p className="text-sm text-gray-500">আজকের দাম</p>
+
           <p className="text-center text-3xl font-bold">
             {data.today.toLocaleString("bn-BD")}
           </p>
-          <p className="text-sm text-gray-500 text-center">{`টাকা / ${unitBn[data.unit]}`}</p>
+
+          <p className="text-center text-sm text-gray-500">
+            {`টাকা / ${unitBn[data.unit] ?? data.unit}`}
+          </p>
 
           <div
-            className={`badge  shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm  ${
+            className={`badge mt-2 shrink-0 gap-1 rounded-full border-0 px-3 py-1 text-sm ${
               data.change.dir === "up"
-                ? "bg-[#f0f5f0]  text-red-500"
+                ? "bg-[#f0f5f0] text-red-500"
                 : data.change.dir === "down"
                   ? "bg-[#f0f5f0] text-green-500"
-                  : "bg-[#f0f5f0]"
+                  : "bg-[#f0f5f0] text-gray-500"
             }`}
           >
             <span>
@@ -119,11 +140,11 @@ const page = async ({ params }: { params: { id: number } }) => {
         </div>
       </div>
 
-      <div>
+      <div className="mt-6">
         <PriceDetailsCard data={data} />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

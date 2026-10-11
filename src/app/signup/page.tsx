@@ -41,7 +41,7 @@ const SignUpPage = () => {
       name,
       email,
       password,
-      callbackURL: "/",
+      callbackURL: "/signin",
     });
 
     if (error) {
@@ -51,8 +51,8 @@ const SignUpPage = () => {
     }
 
     if (data) {
-      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!");
-      router.replace("/");
+      toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এবার সাইন ইন করুন!");
+      router.replace("/signin");
     }
   };
 

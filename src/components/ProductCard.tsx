@@ -34,7 +34,7 @@ const ProductCard = ({ item }: { item: IPriceCardProps }) => {
     item.change.dir === "flat";
 
   return (
-    <Link href={`/product/${item.id}`} 
+    <Link href={`/product/${item.slug}`} 
     className="card w-full rounded-[24px] border border-transparent bg-white shadow-none hover:border-gray-500"
     >
       <div className="card-body gap-0 p-6 ">

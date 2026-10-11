@@ -20,7 +20,7 @@ interface IPriceData {
   lastWeek: number;
   lastMonth: number;
   change: {
-    dir: "up" | "down";
+    dir: "up" | "down" | "same";
     pct: number;
   };
   markets: IMarket[];
